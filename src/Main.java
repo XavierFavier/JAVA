@@ -85,22 +85,16 @@ public class Main {
         double b=1;
         double c=1;
 
-        int i=0;
-        while(i < 100) {
+        while(true) {
             if(Math.abs(a/b-golden) <= x) {
-                double[] ans = new double[2];
-                ans[0] = a;
-                ans[1] = b;
+                double[] ans = {a, b};
                 return ans;
             } else {
                 c=b;
                 b=a;
                 a=b+c;
             }
-            i++;
         }
-        double[] ans = new double[2];
-        return ans;
     }
 
     static void describe(ArrayList<String> myArr) {
@@ -151,12 +145,12 @@ public class Main {
         //    System.out.println(myArr[i]);
         //}
 
-        //double[] myArr = approximation_fibo(0.0000000001);
-        //for(int i=0; i < myArr.length; i++) {
-        //    System.out.println(myArr[i]);
-        //}
+        double[] myArr = approximation_fibo(0.01);
+        for(int i=0; i < myArr.length; i++) {
+            System.out.println(myArr[i]);
+        }
 
-        ArrayList<String> myArr = new ArrayList<String>();
+        /*ArrayList<String> myArr = new ArrayList<String>();
         myArr.add("Jean");
         myArr.add("Ahmed");
         myArr.add("Lea");
@@ -180,6 +174,6 @@ public class Main {
                 "00000v00000000000000i00000000v0000000000000000000000000000e0000000000z0000000\n" +
                 "00(000000c0i0000000000000000000ta0ti0o00000000n 000000d000000000000000000e00\n" +
                 "00J000o00000000000000h0n00 0W00o000000000000o00000000000d0000000s0000000000)0.";
-        System.out.println(decrypt(myStr));
+        System.out.println(decrypt(myStr)); */
     }
 }
