@@ -1,6 +1,8 @@
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 import java.util.Vector;
+import java.util.List;
+import java.util.Arrays;
 
 public class Main {
     //2A.1
@@ -96,7 +98,31 @@ public class Main {
         return ans;
     }
 
+    static void describe(List<String> myArr) {
+        //1.
+        /*for(int i=0; i < myArr.size(); i++) {
+            String myStr = myArr.get(i);
+            System.out.println(myStr + ": " + myStr.length());
+        }
 
+        //2.
+        for(String myStr : myArr) {
+            System.out.println(myStr + ": " + myStr.length());
+        } */
+
+        //3.
+        /*for(String myStr : myArr) {
+            if(myStr.length() >= 4) {
+                System.out.println(myStr + ": " + myStr.length());
+            }
+        }*/
+    }
+    static void to_upper_case(List<String> myArr) {
+        //4.
+        for(String myStr : myArr) {
+            System.out.println(myStr.toUpperCase());
+        }
+    }
 
     public static void main(String[] args) {
         //2A.1
@@ -113,10 +139,12 @@ public class Main {
         //    System.out.println(myArr[i]);
         //}
 
-        double[] myArr = approximation_fibo(0.01);
-        System.out.println("here");
-        for(int i=0; i < myArr.length; i++) {
-            System.out.println(myArr[i]);
-        }
+        //double[] myArr = approximation_fibo(0.01);
+        //for(int i=0; i < myArr.length; i++) {
+        //    System.out.println(myArr[i]);
+        //}
+
+        List<String> myArr = Arrays.asList("Jean", "Ahmed", "Lea", "Blanca");
+        to_upper_case(myArr);
     }
 }
