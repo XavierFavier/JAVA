@@ -1,8 +1,7 @@
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 import java.util.Vector;
-import java.util.List;
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Main {
     //2A.1
@@ -104,7 +103,7 @@ public class Main {
         return ans;
     }
 
-    static void describe(List<String> myArr) {
+    static void describe(ArrayList<String> myArr) {
         //1.
         /*for(int i=0; i < myArr.size(); i++) {
             String myStr = myArr.get(i);
@@ -121,9 +120,9 @@ public class Main {
             if(myStr.length() >= 4) {
                 System.out.println(myStr + ": " + myStr.length());
             }
-        }*/
+        } */
     }
-    static void to_upper_case(List<String> myArr) {
+    static void to_upper_case(ArrayList<String> myArr) {
         //4.
         for(String myStr : myArr) {
             System.out.println(myStr.toUpperCase());
@@ -152,14 +151,20 @@ public class Main {
         //    System.out.println(myArr[i]);
         //}
 
-        double[] myArr = approximation_fibo(0.0000000001);
-        for(int i=0; i < myArr.length; i++) {
-            System.out.println(myArr[i]);
-        }
+        //double[] myArr = approximation_fibo(0.0000000001);
+        //for(int i=0; i < myArr.length; i++) {
+        //    System.out.println(myArr[i]);
+        //}
 
-        //List<String> myArr = Arrays.asList("Jean", "Ahmed", "Lea", "Blanca");
-        //to_upper_case(myArr);
-        /*String myStr = "000T000000000000000000000000000000o0000u00000000000j0o0000000u0000000000r00s0000\n" +
+        ArrayList<String> myArr = new ArrayList<String>();
+        myArr.add("Jean");
+        myArr.add("Ahmed");
+        myArr.add("Lea");
+        myArr.add("Blanca");
+        to_upper_case(myArr);
+
+        //
+        String myStr = "000T000000000000000000000000000000o0000u00000000000j0o0000000u0000000000r00s0000\n" +
                 "c00o0000d00000e000000000000r000000000000000000\n" +
                 "00000c0000000000o000m00000000000000m0e000 000000000s00i0000000000 0l000e00000000\n" +
                 "g000000000000a00000000000000000r0s0000\n" +
@@ -175,6 +180,6 @@ public class Main {
                 "00000v00000000000000i00000000v0000000000000000000000000000e0000000000z0000000\n" +
                 "00(000000c0i0000000000000000000ta0ti0o00000000n 000000d000000000000000000e00\n" +
                 "00J000o00000000000000h0n00 0W00o000000000000o00000000000d0000000s0000000000)0.";
-        System.out.println(decrypt(myStr));*/
+        System.out.println(decrypt(myStr));
     }
 }
