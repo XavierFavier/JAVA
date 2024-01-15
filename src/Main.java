@@ -30,13 +30,20 @@ public class Main {
     }
 
     //2A.2
+    public static boolean isPerfectSquare(int num) {
+        if (num < 0) {
+            return false; // Negative numbers are not perfect squares
+        }
+
+        int sqrt = (int) Math.sqrt(num); // Calculate the integer square root
+
+        // Check if the square of the integer square root is equal to the original number
+        return sqrt * sqrt == num;
+    }
     static int small_square(int x) {
         while(true) {
             x++;
-
-            double sqrt = Math.sqrt(x);
-            long sqrt2 = Math.round(sqrt);
-            if (Math.abs(sqrt - sqrt2) / sqrt < 1e-15) {
+            if(isPerfectSquare(x)) {
                 return x;
             }
         }
@@ -44,10 +51,7 @@ public class Main {
     static int big_square(int x) {
         while(true) {
             x--; //diff. here
-
-            double sqrt = Math.sqrt(x);
-            long sqrt2 = Math.round(sqrt);
-            if (Math.abs(sqrt - sqrt2) / sqrt < 1e-15) {
+            if(isPerfectSquare(x)) {
                 return x;
             }
         }
@@ -135,8 +139,11 @@ public class Main {
         //enumerate_even(100);
 
         //2A.2
-        //System.out.println(small_square(30));
-        //System.out.println(big_square(63));
+        System.out.println(small_square(63));
+        System.out.println(small_square(30));
+        System.out.println(small_square(36));
+        System.out.println(big_square(30));
+        System.out.println(big_square(63));
 
         //int[] myArr = fibo(10);
         //for(int i=0; i < myArr.length; i++) {
@@ -150,7 +157,7 @@ public class Main {
 
         //List<String> myArr = Arrays.asList("Jean", "Ahmed", "Lea", "Blanca");
         //to_upper_case(myArr);
-        String myStr = "000T000000000000000000000000000000o0000u00000000000j0o0000000u0000000000r00s0000\n" +
+        /*String myStr = "000T000000000000000000000000000000o0000u00000000000j0o0000000u0000000000r00s0000\n" +
                 "c00o0000d00000e000000000000r000000000000000000\n" +
                 "00000c0000000000o000m00000000000000m0e000 000000000s00i0000000000 0l000e00000000\n" +
                 "g000000000000a00000000000000000r0s0000\n" +
@@ -166,6 +173,6 @@ public class Main {
                 "00000v00000000000000i00000000v0000000000000000000000000000e0000000000z0000000\n" +
                 "00(000000c0i0000000000000000000ta0ti0o00000000n 000000d000000000000000000e00\n" +
                 "00J000o00000000000000h0n00 0W00o000000000000o00000000000d0000000s0000000000)0.";
-        System.out.println(decrypt(myStr));
+        System.out.println(decrypt(myStr));*/
     }
 }
