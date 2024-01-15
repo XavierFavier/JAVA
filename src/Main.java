@@ -80,13 +80,15 @@ public class Main {
     }
 
     static double[] approximation_fibo(double x) {
+        double golden = (1.0+Math.sqrt(5.0))/2.0;
+
         double a=2;
         double b=1;
         double c=1;
 
         int i=0;
         while(i < 100) {
-            if(Math.abs(a/b-1.6180333) <= x) {
+            if(Math.abs(a/b-golden) <= x) {
                 double[] ans = new double[2];
                 ans[0] = a;
                 ans[1] = b;
@@ -139,21 +141,21 @@ public class Main {
         //enumerate_even(100);
 
         //2A.2
-        System.out.println(small_square(63));
-        System.out.println(small_square(30));
-        System.out.println(small_square(36));
-        System.out.println(big_square(30));
-        System.out.println(big_square(63));
+        //System.out.println(small_square(63));
+        //System.out.println(small_square(30));
+        //System.out.println(small_square(36));
+        //System.out.println(big_square(30));
+        //System.out.println(big_square(63));
 
         //int[] myArr = fibo(10);
         //for(int i=0; i < myArr.length; i++) {
         //    System.out.println(myArr[i]);
         //}
 
-        //double[] myArr = approximation_fibo(0.01);
-        //for(int i=0; i < myArr.length; i++) {
-        //    System.out.println(myArr[i]);
-        //}
+        double[] myArr = approximation_fibo(0.0000000001);
+        for(int i=0; i < myArr.length; i++) {
+            System.out.println(myArr[i]);
+        }
 
         //List<String> myArr = Arrays.asList("Jean", "Ahmed", "Lea", "Blanca");
         //to_upper_case(myArr);
