@@ -6,13 +6,16 @@ public class Main {
 }
 
 class Cell {
-    final static String emptyStr = "|   "; //static allows us to access this without creating an object
+    final public static String emptyStr = "|   "; //static allows us to access this without creating an object
 
-    String representation;
+    private String representation;
     Cell() { //constr.
         representation = emptyStr;
     }
 
+    public void setRepresentation(String representationIn) {
+        representation = representationIn;
+    }
     public String getRepresentation() {
         return representation;
     }
@@ -20,20 +23,30 @@ class Cell {
 
 //-----2
 class Player {
-    String name; //for display purposes
-    String representation;
+    private String name; //for display purposes
+    private String representation;
 
+    public void setName(String nameIn) {
+        name = nameIn;
+    }
+    public String getName() {
+        return name;
+    }
+
+    public void setRepresentation(String representationIn) {
+        representation = representationIn;
+    }
     public String getRepresentation() {
         return representation;
     }
 }
 
 class TicTacToe {
-    final int size = 3;
-    Cell[][] myTable = new Cell[size][size];
+    private final int size = 3;
+    private Cell[][] myTable = new Cell[size][size];
     //2
-    Player player1 = new Player();
-    Player player2 = new Player();
+    private Player player1 = new Player();
+    private Player player2 = new Player();
 
     TicTacToe() { //constr. in Java
         for (int a=0; a < myTable.length; a++) {
@@ -43,11 +56,11 @@ class TicTacToe {
         }
 
         //
-        player1.name = "Joueur 1";
-        player1.representation = "| O ";
+        player1.setName("Joueur 1");
+        player1.setRepresentation("| O ");
 
-        player2.name = "Joueur 2";
-        player2.representation = "| X ";
+        player2.setName("Joueur 2");
+        player2.setRepresentation("| X ");
     }
     //3
     public void play() {
@@ -91,10 +104,10 @@ class TicTacToe {
         int column = -1;
 
         while(true) {
-            System.out.print(player.name + " Ligne: ");
+            System.out.print(player.getName() + " Ligne: ");
             String lineStr = System.console().readLine();
 
-            System.out.print(player.name + " Colonne: ");
+            System.out.print(player.getName() + " Colonne: ");
             String columnStr = System.console().readLine();
 
             boolean incorrectStr = false;
@@ -112,7 +125,7 @@ class TicTacToe {
             } else if((line == 0 || line == 1 || line == 2) &&
                     (column == 0 || column == 1 || column == 2)) {
 
-                if(myTable[line][column].representation == Cell.emptyStr) {
+                if(myTable[line][column].getRepresentation() == Cell.emptyStr) {
                     return new int[] {line, column};
                 } else {
                     System.out.println("Case déjà remplie. Veuillez en choisir une autre.");
@@ -124,11 +137,11 @@ class TicTacToe {
     }
 
     public void setOwner(int line, int column, Player player) {
-        myTable[line][column].representation = player.representation;
+        myTable[line][column].setRepresentation(player.getRepresentation());
     }
 
     //4
-    public String compUtil(Cell cell1,
+    private String compUtil(Cell cell1, //notice 'private' method
                            Cell cell2,
                            Cell cell3,
 
@@ -162,11 +175,11 @@ class TicTacToe {
         status = compUtil(myTable[0][0], myTable[1][1], myTable[2][2], status);
         status = compUtil(myTable[2][0], myTable[1][1], myTable[0][2], status);
 
-        if(status == player1.representation) {
+        if(status == player1.getRepresentation()) {
             display();
             System.out.println("Joueur 1 a gagné!");
             return true;
-        } else if(status == player2.representation) {
+        } else if(status == player2.getRepresentation()) {
             display();
             System.out.println("Joueur 2 a gagné!");
             return true;
@@ -174,7 +187,7 @@ class TicTacToe {
             boolean allCellFilled = true;
             for (int a=0; a < myTable.length; a++) { //line
                 for (int b = 0; b < myTable[a].length; b++) { //column
-                    if(myTable[a][b].representation == Cell.emptyStr) {
+                    if(myTable[a][b].getRepresentation() == Cell.emptyStr) {
                         allCellFilled = false;
                     }
                 }
