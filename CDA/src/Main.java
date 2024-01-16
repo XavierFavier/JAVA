@@ -85,21 +85,18 @@ public class Main {
         double b=1;
         double c=1;
 
-        while(true) {
-            if(Math.abs( (a/b) - golden) <= x) {
-                double[] ans = {a, b};
-                return ans;
-            } else {
+        while(Math.abs( (a/b) - golden) > x) {
                 c=b;
                 b=a;
                 a=b+c;
-            }
         }
+        double[] ans = {a, b};
+        return ans;
     }
 
     static void describe(ArrayList<String> myArr) {
         //1.
-        /*for(int i=0; i < myArr.size(); i++) {
+        for(int i=0; i < myArr.size(); i++) {
             String myStr = myArr.get(i);
             System.out.println(myStr + ": " + myStr.length());
         }
@@ -107,14 +104,14 @@ public class Main {
         //2.
         for(String myStr : myArr) {
             System.out.println(myStr + ": " + myStr.length());
-        } */
+        }
 
         //3.
-        /*for(String myStr : myArr) {
+        for(String myStr : myArr) {
             if(myStr.length() >= 4) {
                 System.out.println(myStr + ": " + myStr.length());
             }
-        } */
+        }
     }
     static void to_upper_case(ArrayList<String> myArr) {
         //4.
