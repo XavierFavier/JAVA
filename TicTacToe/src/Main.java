@@ -43,10 +43,10 @@ class TicTacToe {
         }
 
         //
-        player1.name = "Player 1";
+        player1.name = "Joueur 1";
         player1.representation = "| O ";
 
-        player2.name = "Player 2";
+        player2.name = "Joueur 2";
         player2.representation = "| X ";
     }
     //3
@@ -67,7 +67,7 @@ class TicTacToe {
             if(isOver()) {
                 loopBool = false;
             } else {
-                if(player == player1) {
+                if(player == player1) { //comparaison d'objets
                     player = player2;
                 } else {
                     player = player1;
@@ -108,17 +108,17 @@ class TicTacToe {
 
 
             if(incorrectStr) {
-                System.out.println("Incorrect number. Please choose 1, 2 or 3.");
+                System.out.println("Nombre incorrect. Veuillez choisir 1, 2 ou 3.");
             } else if((line == 0 || line == 1 || line == 2) &&
                     (column == 0 || column == 1 || column == 2)) {
 
                 if(myTable[line][column].representation == Cell.emptyStr) {
                     return new int[] {line, column};
                 } else {
-                    System.out.println("Cell already filled. Please choose another one.");
+                    System.out.println("Case déjà remplie. Veuillez en choisir une autre.");
                 }
             } else {
-                System.out.println("Line/Column should be between 1 and 3 incl.");
+                System.out.println("Ligne/Colonne doit être entre 1, 2 ou 3");
             }
         }
     }
@@ -164,11 +164,11 @@ class TicTacToe {
 
         if(status == player1.representation) {
             display();
-            System.out.println("Player 1 Won!");
+            System.out.println("Joueur 1 a gagné!");
             return true;
         } else if(status == player2.representation) {
             display();
-            System.out.println("Player 2 Won!");
+            System.out.println("Joueur 2 a gagné!");
             return true;
         } else {
             boolean allCellFilled = true;
@@ -182,7 +182,7 @@ class TicTacToe {
 
             if(allCellFilled) {
                 display();
-                System.out.println("It's a tie!");
+                System.out.println("Egalité!");
             }
 
             return allCellFilled;
