@@ -86,7 +86,7 @@ public class Main {
         double c=1;
 
         while(true) {
-            if(Math.abs(a/b-golden) <= x) {
+            if(Math.abs( (a/b) - golden) <= x) {
                 double[] ans = {a, b};
                 return ans;
             } else {
