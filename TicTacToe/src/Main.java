@@ -8,16 +8,13 @@ public class Main {
 class Cell {
     final public static String emptyStr = "|   "; //static allows us to access this without creating an object
 
-    private String representation;
-    Cell() { //constr.
-        representation = emptyStr;
-    }
+    private String representation = emptyStr;
 
-    public void setRepresentation(String representationIn) {
-        representation = representationIn;
-    }
     public String getRepresentation() {
         return representation;
+    }
+    public void setRepresentation(String representationIn) {
+        representation = representationIn;
     }
 }
 
@@ -26,18 +23,18 @@ class Player {
     private String name; //for display purposes
     private String representation;
 
-    public void setName(String nameIn) {
-        name = nameIn;
-    }
     public String getName() {
         return name;
     }
-
-    public void setRepresentation(String representationIn) {
-        representation = representationIn;
+    public void setName(String nameIn) {
+        name = nameIn;
     }
+
     public String getRepresentation() {
         return representation;
+    }
+    public void setRepresentation(String representationIn) {
+        representation = representationIn;
     }
 }
 
@@ -62,6 +59,7 @@ class TicTacToe {
         player2.setName("Joueur 2");
         player2.setRepresentation("| X ");
     }
+
     //3
     public void play() {
         System.out.println("Bienvenue dans le morpion !");
@@ -140,40 +138,46 @@ class TicTacToe {
         myTable[line][column].setRepresentation(player.getRepresentation());
     }
 
-    //4
-    private String compUtil(Cell cell1, //notice 'private' method
-                           Cell cell2,
-                           Cell cell3,
-
-                           String status) {
-
-        if(status != "") {
-            return status;
-        }
-        else if (cell1.getRepresentation() == cell2.getRepresentation() &&
-                cell2.getRepresentation() == cell3.getRepresentation() &&
-                cell1.getRepresentation() == cell3.getRepresentation() &&
-
-                cell1.getRepresentation() != Cell.emptyStr) {
-
-            return cell1.getRepresentation();
-        } else {
-            return "";
-        }
-    }
+//    //4
+//    private String compUtil(Cell cell1, //notice 'private' method
+//                           Cell cell2,
+//                           Cell cell3,
+//
+//                           String status) {
+//
+//        if(status != "") {
+//            return status;
+//        }
+//        else if (cell1.getRepresentation() == cell2.getRepresentation() &&
+//                cell2.getRepresentation() == cell3.getRepresentation() &&
+//                cell1.getRepresentation() == cell3.getRepresentation() &&
+//
+//                cell1.getRepresentation() != Cell.emptyStr) {
+//
+//            return cell1.getRepresentation();
+//        } else {
+//            return "";
+//        }
+//    }
     public boolean isOver() {
         String status = "";
-        for(int a=0; a < myTable.length; a++) { //line
-            status = compUtil(myTable[a][0], myTable[a][1], myTable[a][2], status);
+        for(int a=0; a < myTable.length; a++) { //for every line
+            String currentRep =
+            for(int b=0; b < myTable[a].length; b++) {
+
+            }
         }
 
-        for(int b=0; b < myTable[0].length; b++) { //column
-            status = compUtil(myTable[0][b], myTable[1][b], myTable[2][b], status);
+        for(int b=0; b < myTable[0].length; b++) { //for every column
+            for(int a=0; a < myTable.length; a++) {
+
+            }
         }
 
         //diagonal
-        status = compUtil(myTable[0][0], myTable[1][1], myTable[2][2], status);
-        status = compUtil(myTable[2][0], myTable[1][1], myTable[0][2], status);
+        for(int a=0; a < size; a++) {
+
+        }
 
         if(status == player1.getRepresentation()) {
             display();
