@@ -138,47 +138,69 @@ class TicTacToe {
         myTable[line][column].setRepresentation(player.getRepresentation());
     }
 
-//    //4
-//    private String compUtil(Cell cell1, //notice 'private' method
-//                           Cell cell2,
-//                           Cell cell3,
-//
-//                           String status) {
-//
-//        if(status != "") {
-//            return status;
-//        }
-//        else if (cell1.getRepresentation() == cell2.getRepresentation() &&
-//                cell2.getRepresentation() == cell3.getRepresentation() &&
-//                cell1.getRepresentation() == cell3.getRepresentation() &&
-//
-//                cell1.getRepresentation() != Cell.emptyStr) {
-//
-//            return cell1.getRepresentation();
-//        } else {
-//            return "";
-//        }
-//    }
     public boolean isOver() {
-        String status = "";
-        for(int a=0; a < myTable.length; a++) { //for every line
-            String currentRep =
-            for(int b=0; b < myTable[a].length; b++) {
+        //notice code below works for any TicTacToe table size
 
+        String status = "";
+        //
+        boolean allSame;
+        String currentRep;
+
+        for(int a=0; a < myTable.length; a++) { //for every line
+            allSame = true;
+            currentRep = myTable[a][0].getRepresentation();
+
+            for(int b=0; b < myTable[a].length; b++) {
+                if(myTable[a][b].getRepresentation() != currentRep) {
+                    allSame = false;
+                }
+            }
+
+            if(allSame && currentRep != Cell.emptyStr) {
+                status = currentRep;
             }
         }
 
         for(int b=0; b < myTable[0].length; b++) { //for every column
-            for(int a=0; a < myTable.length; a++) {
+            allSame = true;
+            currentRep = myTable[0][b].getRepresentation();
 
+            for(int a=0; a < myTable.length; a++) {
+                if(myTable[a][b].getRepresentation() != currentRep) {
+                    allSame = false;
+                }
+            }
+
+            if(allSame && currentRep != Cell.emptyStr) {
+                status = currentRep;
             }
         }
 
-        //diagonal
+        //diagonal 1
+        allSame = true;
+        currentRep = myTable[0][0].getRepresentation();
         for(int a=0; a < size; a++) {
-
+            if(myTable[a][a].getRepresentation() != currentRep) {
+                allSame = false;
+            }
+        }
+        if(allSame && currentRep != Cell.emptyStr) {
+            status = currentRep;
         }
 
+        //diagonal 2
+        allSame = true;
+        currentRep = myTable[0][size-1].getRepresentation();
+        for(int a=0; a < size; a++) {
+            if(myTable[a][size-1-a].getRepresentation() != currentRep) {
+                allSame = false;
+            }
+        }
+        if(allSame && currentRep != Cell.emptyStr) {
+            status = currentRep;
+        }
+
+        //-----
         if(status == player1.getRepresentation()) {
             display();
             System.out.println("Joueur 1 a gagné!");
