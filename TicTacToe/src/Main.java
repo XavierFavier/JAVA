@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
         TicTacToe ticTacToe = new TicTacToe();
@@ -102,11 +104,13 @@ class TicTacToe {
         int column = -1;
 
         while(true) {
+            Scanner myObj = new Scanner(System.in);
+
             System.out.print(player.getName() + " Ligne: ");
-            String lineStr = System.console().readLine();
+            String lineStr = myObj.nextLine(); // Read user input
 
             System.out.print(player.getName() + " Colonne: ");
-            String columnStr = System.console().readLine();
+            String columnStr = myObj.nextLine();
 
             boolean incorrectStr = false;
             try {
