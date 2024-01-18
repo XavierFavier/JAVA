@@ -10,8 +10,10 @@ public class TicTacToe {
     private Player player2;
 
     //
-    private Scanner myScan = new Scanner(System.in);
     Random rand = new Random();
+
+    private View view = new View();
+    private InteractionUtilisateur myScan = new InteractionUtilisateur();
 
     //
     TicTacToe() { //constr. in Java
@@ -23,21 +25,21 @@ public class TicTacToe {
     }
 
     private void initGame() {
-        System.out.println("Bienvenue dans le morpion !");
+        view.println("Bienvenue dans le morpion !");
 
         int playerNbr = -1;
         while(playerNbr == -1) {
-            System.out.print("Nombre de joueurs? 0, 1 ou 2: ");
+            view.print("Nombre de joueurs? 0, 1 ou 2: ");
             String playerStr = myScan.nextLine();
 
             try {
                 playerNbr = Integer.parseInt(playerStr);
             } catch (Exception e) {
-                System.out.println("Nombre incorrect. Veuillez choisir 0, 1 ou 2.");
+                view.println("Nombre incorrect. Veuillez choisir 0, 1 ou 2.");
             }
 
             if(playerNbr < 0  || playerNbr > 2) {
-                System.out.println("Nombre incorrect. Veuillez choisir 0, 1 ou 2.");
+                view.println("Nombre incorrect. Veuillez choisir 0, 1 ou 2.");
                 playerNbr = -1;
             }
         }
@@ -83,12 +85,12 @@ public class TicTacToe {
     }
 
     public void display() {
-        System.out.println("-------------");
+        view.println("-------------");
         for (int a=0; a < myTable.length; a++) { //line
             for(int b=0; b < myTable[a].length; b++) { //column
-                System.out.print(myTable[a][b].getRepresentation());
+                view.print(myTable[a][b].getRepresentation());
             }
-            System.out.println("|\n-------------");
+            view.println("|\n-------------");
         }
     }
 
@@ -96,17 +98,17 @@ public class TicTacToe {
     private int getLine(Player player) {
         while(true) {
             int line = -1;
-            System.out.print(player.getName() + " Ligne: ");
+            view.print(player.getName() + " Ligne: ");
             String lineStr = myScan.nextLine(); // Read user input
 
             try {
                 line = Integer.parseInt(lineStr) - 1;
             } catch (Exception e) {
-                System.out.println("Nombre incorrect. Veuillez choisir 1, 2 ou 3."); continue;
+                view.println("Nombre incorrect. Veuillez choisir 1, 2 ou 3."); continue;
             }
 
             if(line < 0 || line >= size) {
-                System.out.println("Ligne/Colonne doit être entre 1, 2 ou 3"); continue;
+                view.println("Ligne/Colonne doit être entre 1, 2 ou 3"); continue;
             }
             return line;
         }
@@ -115,24 +117,24 @@ public class TicTacToe {
     private int getColumn(Player player) {
         while(true) {
             int column = -1;
-            System.out.print(player.getName() + " Colonne: ");
+            view.print(player.getName() + " Colonne: ");
             String columnStr = myScan.nextLine();
 
             try {
                 column = Integer.parseInt(columnStr) - 1;
             } catch (Exception e) {
-                System.out.println("Nombre incorrect. Veuillez choisir 1, 2 ou 3."); continue;
+                view.println("Nombre incorrect. Veuillez choisir 1, 2 ou 3."); continue;
             }
 
             if (column < 0 || column >= size) {
-                System.out.println("Ligne/Colonne doit être entre 1, 2 ou 3"); continue;
+                view.println("Ligne/Colonne doit être entre 1, 2 ou 3"); continue;
             }
             return column;
         }
     }
 
     public int[] getMoveFromPlayer(Player player) {
-        if (!player.getArtificial()) {System.out.println("Veuillez rentrer un chiffre: 1, 2 ou 3");}
+        if (!player.getArtificial()) {view.println("Veuillez rentrer un chiffre: 1, 2 ou 3");}
 
         while (true) {
             int line;
@@ -148,7 +150,7 @@ public class TicTacToe {
 
             //
             if (myTable[line][column].getRepresentation() != Cell.emptyStr) {
-                if (!player.getArtificial()) {System.out.println("Case déjà remplie. Veuillez en choisir une autre.");}
+                if (!player.getArtificial()) {view.println("Case déjà remplie. Veuillez en choisir une autre.");}
                 continue;
             }
 
@@ -247,7 +249,7 @@ public class TicTacToe {
 
         if(allFilled) {
             display();
-            System.out.println("Egalité!");
+            view.println("Egalité!");
         }
 
         return allFilled;
@@ -265,11 +267,11 @@ public class TicTacToe {
         //-----
         if(status.equals(player1.getRepresentation())) {
             display();
-            System.out.println("Joueur 1 a gagné!");
+            view.println("Joueur 1 a gagné!");
             return true;
         } else if(status.equals(player2.getRepresentation())) {
             display();
-            System.out.println("Joueur 2 a gagné!");
+            view.println("Joueur 2 a gagné!");
             return true;
         } else {
             return allCellFilled();
