@@ -1,4 +1,4 @@
-public class Player {
+public abstract class Player {
     private String name; //for display purposes
     private String representation;
 
@@ -14,5 +14,18 @@ public class Player {
     }
     public void setRepresentation(String representationIn) {
         representation = "| " + representationIn + " ";
+    }
+
+    public boolean getArtificial() {
+        return false;
+    }
+}
+
+class HumanPlayer extends Player {
+
+}
+class ArtificialPlayer extends Player {
+    @Override public boolean getArtificial() {
+        return true;
     }
 }

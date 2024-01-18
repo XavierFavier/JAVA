@@ -1,37 +1,68 @@
 import java.util.Scanner;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class TicTacToe {
     private final int size = 3;
     private Cell[][] myTable = new Cell[size][size];
     //2
-    private Player player1 = new Player();
-    private Player player2 = new Player();
+    private Player player1;
+    private Player player2;
 
+    //
+    private Scanner myScan = new Scanner(System.in);
+    Random rand = new Random();
+
+    //
     TicTacToe() { //constr. in Java
         for (int a=0; a < myTable.length; a++) {
             for(int b=0; b < myTable[a].length; b++) {
                 myTable[a][b] = new Cell();
             }
         }
-
-        //
-        player1.setName("Joueur 1");
-        player1.setRepresentation("O");
-
-        player2.setName("Joueur 2");
-        player2.setRepresentation("X");
     }
 
     //3
     public void play() {
         System.out.println("Bienvenue dans le morpion !");
 
-        Player player = player1;
+        int playerNbr = -1;
+        while(playerNbr == -1) {
+            System.out.print("Nombre de joueurs? 0, 1 ou 2: ");
+            String playerStr = myScan.nextLine();
 
+            try {
+                playerNbr = Integer.parseInt(playerStr);
+            } catch (Exception e) {
+                System.out.println("Nombre incorrect. Veuillez choisir 0, 1 ou 2.");
+            }
+
+            if(playerNbr < 0  && playerNbr > 2) {
+                System.out.println("Nombre incorrect. Veuillez choisir 0, 1 ou 2.");
+                playerNbr = -1;
+            }
+        }
+
+        if(playerNbr == 2) {
+            player1 = new HumanPlayer();
+            player2 = new HumanPlayer();
+        } else if(playerNbr == 1) {
+            player1 = new HumanPlayer();
+            player2 = new ArtificialPlayer();
+        } else {
+            player1 = new ArtificialPlayer();
+            player2 = new ArtificialPlayer();
+        }
+        player1.setName("Joueur 1");
+        player1.setRepresentation("O");
+
+        player2.setName("Joueur 2");
+        player2.setRepresentation("X");
+
+        //
+        Player player = player1;
         while(true) {
             display();
-
-            System.out.println("Veuillez rentrer un chiffre: 1, 2 ou 3");
 
             int[] ret = getMoveFromPlayer(player);
             setOwner(ret[0], ret[1], player);
@@ -62,9 +93,8 @@ public class TicTacToe {
     private int getLine(Player player) {
         while(true) {
             int line = -1;
-            Scanner myObj = new Scanner(System.in);
             System.out.print(player.getName() + " Ligne: ");
-            String lineStr = myObj.nextLine(); // Read user input
+            String lineStr = myScan.nextLine(); // Read user input
 
             try {
                 line = Integer.parseInt(lineStr) - 1;
@@ -82,9 +112,8 @@ public class TicTacToe {
     private int getColumn(Player player) {
         while(true) {
             int column = -1;
-            Scanner myObj = new Scanner(System.in);
             System.out.print(player.getName() + " Colonne: ");
-            String columnStr = myObj.nextLine();
+            String columnStr = myScan.nextLine();
 
             try {
                 column = Integer.parseInt(columnStr) - 1;
@@ -100,16 +129,29 @@ public class TicTacToe {
     }
 
     public int[] getMoveFromPlayer(Player player) {
+        if (!player.getArtificial()) {System.out.println("Veuillez rentrer un chiffre: 1, 2 ou 3");}
+
         while (true) {
-            int line = getLine(player);
-            int column = getColumn(player);
+            int line;
+            int column;
+
+            if(player.getArtificial()) {
+                line = rand.nextInt(size);
+                column = rand.nextInt(size);
+            } else {
+                line = getLine(player);
+                column = getColumn(player);
+            }
 
             //
             if (myTable[line][column].getRepresentation() != Cell.emptyStr) {
-                System.out.println("Case déjà remplie. Veuillez en choisir une autre.");
+                if (!player.getArtificial()) {System.out.println("Case déjà remplie. Veuillez en choisir une autre.");}
                 continue;
             }
 
+            if(player.getArtificial()) {
+                try {TimeUnit.SECONDS.sleep(2);} catch (Exception e) {} //pause 2 seconds
+            }
             //all OK
             return new int[]{line, column};
         }
