@@ -22,8 +22,7 @@ public class TicTacToe {
         }
     }
 
-    //3
-    public void play() {
+    private void initGame() {
         System.out.println("Bienvenue dans le morpion !");
 
         int playerNbr = -1;
@@ -37,7 +36,7 @@ public class TicTacToe {
                 System.out.println("Nombre incorrect. Veuillez choisir 0, 1 ou 2.");
             }
 
-            if(playerNbr < 0  && playerNbr > 2) {
+            if(playerNbr < 0  || playerNbr > 2) {
                 System.out.println("Nombre incorrect. Veuillez choisir 0, 1 ou 2.");
                 playerNbr = -1;
             }
@@ -58,6 +57,10 @@ public class TicTacToe {
 
         player2.setName("Joueur 2");
         player2.setRepresentation("X");
+    }
+    //3
+    public void play() {
+        initGame();
 
         //
         Player player = player1;
@@ -70,7 +73,7 @@ public class TicTacToe {
             if(isOver()) {
                 break;
             } else {
-                if(player == player1) { //comparaison d'objets
+                if(player.getName().equals(player1.getName())) {
                     player = player2;
                 } else {
                     player = player1;
@@ -232,7 +235,23 @@ public class TicTacToe {
         }
         return "";
     }
+    private boolean allCellFilled() {
+        boolean allFilled = true;
+        for (int a=0; a < myTable.length; a++) { //line
+            for (int b = 0; b < myTable[a].length; b++) { //column
+                if(myTable[a][b].getRepresentation().equals(Cell.emptyStr)) {
+                    allFilled = false;
+                }
+            }
+        }
 
+        if(allFilled) {
+            display();
+            System.out.println("Egalité!");
+        }
+
+        return allFilled;
+    }
     public boolean isOver() {
         //notice code below works for any TicTacToe table size
 
@@ -244,30 +263,16 @@ public class TicTacToe {
         status = checkDiagonal2(status);
 
         //-----
-        if(status == player1.getRepresentation()) {
+        if(status.equals(player1.getRepresentation())) {
             display();
             System.out.println("Joueur 1 a gagné!");
             return true;
-        } else if(status == player2.getRepresentation()) {
+        } else if(status.equals(player2.getRepresentation())) {
             display();
             System.out.println("Joueur 2 a gagné!");
             return true;
         } else {
-            boolean allCellFilled = true;
-            for (int a=0; a < myTable.length; a++) { //line
-                for (int b = 0; b < myTable[a].length; b++) { //column
-                    if(myTable[a][b].getRepresentation() == Cell.emptyStr) {
-                        allCellFilled = false;
-                    }
-                }
-            }
-
-            if(allCellFilled) {
-                display();
-                System.out.println("Egalité!");
-            }
-
-            return allCellFilled;
+            return allCellFilled();
         }
     }
 }
