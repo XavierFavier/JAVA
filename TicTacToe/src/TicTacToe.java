@@ -15,7 +15,7 @@ public class TicTacToe {
     private InteractionUtilisateur myScan = new InteractionUtilisateur();
 
     //
-    TicTacToe() { //constr. in Java
+    public TicTacToe() { //constr. in Java
         for (int a=0; a < myTable.length; a++) {
             for(int b=0; b < myTable[a].length; b++) {
                 myTable[a][b] = new Cell();
@@ -29,13 +29,7 @@ public class TicTacToe {
         int playerNbr = -1;
         while(playerNbr == -1) {
             view.print("Nombre de joueurs? 0, 1 ou 2: ");
-            String playerStr = myScan.nextLine();
-
-            try {
-                playerNbr = Integer.parseInt(playerStr);
-            } catch (Exception e) {
-                view.println("Nombre incorrect. Veuillez choisir 0, 1 ou 2.");
-            }
+            playerNbr = myScan.getInt();
 
             if(playerNbr < 0  || playerNbr > 2) {
                 view.println("Nombre incorrect. Veuillez choisir 0, 1 ou 2.");
@@ -98,13 +92,7 @@ public class TicTacToe {
         while(true) {
             int line = -1;
             view.print(player.getName() + " Ligne: ");
-            String lineStr = myScan.nextLine(); // Read user input
-
-            try {
-                line = Integer.parseInt(lineStr) - 1;
-            } catch (Exception e) {
-                view.println("Nombre incorrect. Veuillez choisir 1, 2 ou 3."); continue;
-            }
+            line = myScan.getInt()-1; // Read user input
 
             if(line < 0 || line >= size) {
                 view.println("Ligne/Colonne doit être entre 1, 2 ou 3"); continue;
@@ -117,13 +105,7 @@ public class TicTacToe {
         while(true) {
             int column = -1;
             view.print(player.getName() + " Colonne: ");
-            String columnStr = myScan.nextLine();
-
-            try {
-                column = Integer.parseInt(columnStr) - 1;
-            } catch (Exception e) {
-                view.println("Nombre incorrect. Veuillez choisir 1, 2 ou 3."); continue;
-            }
+            column = myScan.getInt()-1;
 
             if (column < 0 || column >= size) {
                 view.println("Ligne/Colonne doit être entre 1, 2 ou 3"); continue;
