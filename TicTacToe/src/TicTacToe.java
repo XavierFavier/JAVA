@@ -3,8 +3,6 @@ public class TicTacToe extends BoardGame {
         setSizeLine(3);
         setSizeColumn(3);
         setCheckSize(3);
-
-        initTable();
     }
 
 //    //---

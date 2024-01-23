@@ -33,7 +33,7 @@ public abstract class BoardGame {
 
     }
 
-    protected void initTable() {
+    private void initGame() {
         myTable = new Cell[sizeLine][sizeColumn];
 
         for (int a=0; a < myTable.length; a++) {
@@ -41,9 +41,7 @@ public abstract class BoardGame {
                 myTable[a][b] = new Cell();
             }
         }
-    }
 
-    private void initGame() {
         int playerNbr = -1;
         while(playerNbr == -1) {
             view.print("Nombre de joueurs? 0, 1 ou 2: ");
