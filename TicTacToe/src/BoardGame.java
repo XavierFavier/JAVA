@@ -2,8 +2,17 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public abstract class BoardGame {
-    protected final int size = 3;
-    protected Cell[][] myTable = new Cell[size][size];
+    protected int sizeLine = 0;
+    void setSizeLine(int input) {
+        sizeLine = input;
+    }
+
+    protected int sizeColumn = 0;
+    void setSizeColumn(int input) {
+        sizeColumn = input;
+    }
+
+    protected Cell[][] myTable;
     //2
     protected Player player1;
     protected Player player2;
@@ -14,8 +23,19 @@ public abstract class BoardGame {
     protected View view = new View();
     protected InteractionUtilisateur myScan = new InteractionUtilisateur();
 
+    protected boolean puissanceBool = false;
+    protected void setPuissance(boolean input) {
+        puissanceBool = input;
+    }
+
     //
     public BoardGame() { //constr. in Java
+
+    }
+
+    protected void initTable() {
+        myTable = new Cell[sizeLine][sizeColumn];
+
         for (int a=0; a < myTable.length; a++) {
             for(int b=0; b < myTable[a].length; b++) {
                 myTable[a][b] = new Cell();
@@ -24,8 +44,6 @@ public abstract class BoardGame {
     }
 
     private void initGame() {
-        view.println("Bienvenue dans le morpion !");
-
         int playerNbr = -1;
         while(playerNbr == -1) {
             view.print("Nombre de joueurs? 0, 1 ou 2: ");
@@ -77,7 +95,7 @@ public abstract class BoardGame {
         }
     }
 
-    public void setOwner(int line, int column, Player player) {
+    public void setOwner(int line, int column, Player player) { //overriden for PuissanceQ
         myTable[line][column].setRepresentation(player.getRepresentation());
     }
 
@@ -87,8 +105,8 @@ public abstract class BoardGame {
             view.print(player.getName() + " Ligne: ");
             line = myScan.getInt()-1; // Read user input
 
-            if(line < 0 || line >= size) {
-                view.println("Ligne/Colonne doit être entre 1, 2 ou 3"); continue;
+            if(line < 0 || line >= sizeLine) {
+                view.println("Ligne/Colonne doit être entre 1 et " + String.valueOf(sizeLine)); continue;
             }
             return line;
         }
@@ -100,30 +118,54 @@ public abstract class BoardGame {
             view.print(player.getName() + " Colonne: ");
             column = myScan.getInt()-1;
 
-            if (column < 0 || column >= size) {
-                view.println("Ligne/Colonne doit être entre 1, 2 ou 3"); continue;
+            if (column < 0 || column >= sizeColumn) {
+                view.println("Ligne/Colonne doit être entre 1 et " + String.valueOf(sizeColumn)); continue;
             }
             return column;
         }
     }
 
+    private int puissanceQ_util(int column) { //returns line
+        for(int a=myTable.length-1; a >= 0; a--) {
+            if(myTable[a][column].getRepresentation() == Cell.EMPTY_STR) {
+                return a;
+            }
+        }
+
+        return -1;
+    }
+
     public int[] getMoveFromPlayer(Player player) {
-        if (!player.getArtificial()) {view.println("Veuillez rentrer un chiffre: 1, 2 ou 3");}
+        if (!player.getArtificial()) {view.println("Veuillez rentrer un nombre:");}
 
         while (true) {
             int line;
             int column;
 
-            if(player.getArtificial()) {
-                line = rand.nextInt(size);
-                column = rand.nextInt(size);
+            if(puissanceBool) {
+                if(player.getArtificial()) {
+                    column = rand.nextInt(sizeLine);
+                } else {
+                    column = getColumn(player);
+                }
+                line = puissanceQ_util(column);
+
+                if(line == -1) {
+                    view.println("Colonne complète. Veuillez en choisir une autre.");
+                    continue;
+                }
             } else {
-                line = getLine(player);
-                column = getColumn(player);
+                if(player.getArtificial()) {
+                    line = rand.nextInt(sizeLine);
+                    column = rand.nextInt(sizeColumn);
+                } else {
+                    line = getLine(player);
+                    column = getColumn(player);
+                }
             }
 
             //
-            if (myTable[line][column].getRepresentation() != Cell.emptyStr) {
+            if (myTable[line][column].getRepresentation() != Cell.EMPTY_STR) {
                 if (!player.getArtificial()) {view.println("Case déjà remplie. Veuillez en choisir une autre.");}
                 continue;
             }
@@ -141,7 +183,7 @@ public abstract class BoardGame {
         boolean allFilled = true;
         for (int a=0; a < myTable.length; a++) { //line
             for (int b = 0; b < myTable[a].length; b++) { //column
-                if(myTable[a][b].getRepresentation().equals(Cell.emptyStr)) {
+                if(myTable[a][b].getRepresentation().equals(Cell.EMPTY_STR)) {
                     allFilled = false;
                 }
             }
@@ -156,7 +198,9 @@ public abstract class BoardGame {
     }
 
     public void display() {
-        for(int a=0; a < size; a++) {
+        view.println("");
+        view.println("");
+        for(int a=0; a < sizeColumn; a++) {
             view.print("----");
         }
         view.print("\n");
@@ -165,16 +209,90 @@ public abstract class BoardGame {
                 view.print(myTable[a][b].getRepresentation());
             }
             view.println("|");
-            for(int c=0; c < size; c++) {
+            for(int c=0; c < sizeColumn; c++) {
                 view.print("----");
             }
             view.print("\n");
         }
     }
 
-    //
-    protected boolean isOver() { //overriden for TicTacToe
-
+    private boolean isOver_util(boolean same, String curStr) {
+        if(same && curStr != Cell.EMPTY_STR) {
+            if(curStr.equals(player1.getRepresentation())) {
+                display();
+                view.println("Joueur 1 a gagné!");
+                return true;
+            } else if(curStr.equals(player2.getRepresentation())) {
+                display();
+                view.println("Joueur 2 a gagné!");
+                return true;
+            }
+        }
         return false;
+    }
+    //
+    protected int checkSize = 0;
+    void setCheckSize(int input) {
+        checkSize = input;
+    }
+
+    protected boolean isOver() {
+        for(int a=0; a < myTable.length; a++) {
+            for(int b=0; b < myTable.length; b++) { //for every cell
+                //line
+                boolean same = true;
+                String curStr = myTable[a][b].getRepresentation();
+                if(b+checkSize <= myTable[a].length) {
+                    for(int c=0; c < checkSize; c++) {
+                        if(myTable[a][b+c].getRepresentation() != curStr) {
+                            same = false;
+                        }
+                    }
+                    if(isOver_util(same, curStr)) {return true;}
+                }
+
+                //column
+                same = true;
+                curStr = myTable[a][b].getRepresentation();
+                if(a+checkSize <= myTable.length) {
+                    for (int c=0; c < checkSize; c++) {
+                        if (myTable[a+c][b].getRepresentation() != curStr) {
+                            same = false;
+                        }
+                    }
+                    if(isOver_util(same, curStr)) {return true;}
+                }
+
+                //diagonal1
+                same = true;
+                curStr = myTable[a][b].getRepresentation();
+                if(b+checkSize <= myTable[a].length &&
+                        a+checkSize <= myTable.length) {
+
+                    for(int c=0; c < checkSize; c++) {
+                        if(myTable[a+c][b+c].getRepresentation() != curStr) {
+                            same = false;
+                        }
+                    }
+                    if(isOver_util(same, curStr)) {return true;}
+                }
+
+                //diagonal2
+                same = true;
+                curStr = myTable[a][b].getRepresentation();
+                if(b+checkSize <= myTable[a].length &&
+                        a-checkSize >= -1) {
+
+                    for(int c=0; c < checkSize; c++) {
+                        if(myTable[a-c][b+c].getRepresentation() != curStr) {
+                            same = false;
+                        }
+                    }
+                    if(isOver_util(same, curStr)) {return true;}
+                }
+            }
+        }
+
+        return allCellFilled();
     }
 }

@@ -1,5 +1,11 @@
 public class PuissanceQ extends BoardGame {
-    @Override public void setOwner(int line, int column, Player player) {
-        //
+    PuissanceQ() {
+        setSizeLine(6);
+        setSizeColumn(7);
+        setCheckSize(4);
+
+        setPuissance(true);
+
+        initTable();
     }
 }
