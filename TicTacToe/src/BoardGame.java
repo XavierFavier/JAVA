@@ -121,6 +121,9 @@ public abstract class BoardGame {
             if (column < 0 || column >= sizeColumn) {
                 view.println("Ligne/Colonne doit être entre 1 et " + String.valueOf(sizeColumn)); continue;
             }
+            if(puissanceBool && puissanceQ_util(column)==-1) {
+                view.println("Colonne complète. Veuillez en choisir une autre."); continue;
+            }
             return column;
         }
     }
@@ -145,15 +148,11 @@ public abstract class BoardGame {
             if(puissanceBool) {
                 if(player.getArtificial()) {
                     column = rand.nextInt(sizeLine);
+                    if(puissanceQ_util(column) == -1) {continue;}
                 } else {
                     column = getColumn(player);
                 }
                 line = puissanceQ_util(column);
-
-                if(line == -1) {
-                    view.println("Colonne complète. Veuillez en choisir une autre.");
-                    continue;
-                }
             } else {
                 if(player.getArtificial()) {
                     line = rand.nextInt(sizeLine);
