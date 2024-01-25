@@ -197,20 +197,52 @@ public abstract class BoardGame {
     public void display() {
         view.println("");
         view.println("");
+        view.print("    ");
+        for(int c=0; c < sizeColumn; c++) {
+            String curStr = String.valueOf(c+1);
+            String curStr2;
+            if(curStr.length() == 1) {
+                curStr2 = "  ";
+            } else {
+                curStr2 = " ";
+            }
+            view.print(curStr2 + curStr + " ");
+        }
+
+        view.println("");
+        view.print("    ");
         for(int a=0; a < sizeColumn; a++) {
             view.print("----");
         }
         view.print("\n");
         for (int a=0; a < myTable.length; a++) { //line
+            if(!puissanceBool) {
+                String curStr = String.valueOf(a+1);
+                String curStr2;
+                if(curStr.length() == 1) {
+                    curStr2 = "  ";
+                } else {
+                    curStr2 = " ";
+                }
+
+                view.print(curStr2 + curStr + " ");
+            } else {
+                view.print("  " + " " + " ");
+            }
+
             for(int b=0; b < myTable[a].length; b++) { //column
                 view.print(myTable[a][b].getRepresentation());
             }
             view.println("|");
+            view.print("    ");
             for(int c=0; c < sizeColumn; c++) {
                 view.print("----");
             }
+
             view.print("\n");
         }
+        view.println("");
+        view.println("");
     }
 
     private boolean isOver_util(boolean same, String curStr) {

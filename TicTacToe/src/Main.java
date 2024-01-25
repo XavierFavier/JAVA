@@ -3,7 +3,7 @@ public class Main {
         View view = new View();
         InteractionUtilisateur scanner = new InteractionUtilisateur();
 
-        view.println("\nBienvenue dans le jeu !\n1.Morpion\n2.Puissance 4\n3.Gomoku\n\nVeuillez choisir votre jeu: ");
+        view.print("\nBienvenue dans le jeu !\n1.Morpion\n2.Puissance 4\n3.Gomoku\n\nVeuillez choisir votre jeu: ");
 
         int nbr = -1;
         while(nbr == -1) {
