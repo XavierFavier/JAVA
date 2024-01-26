@@ -21,11 +21,4 @@ public abstract class Player {
     }
 }
 
-class HumanPlayer extends Player {
 
-}
-class ArtificialPlayer extends Player {
-    @Override public boolean getArtificial() {
-        return true;
-    }
-}

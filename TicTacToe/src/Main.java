@@ -1,5 +1,5 @@
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         View view = new View();
         InteractionUtilisateur scanner = new InteractionUtilisateur();
 
@@ -10,26 +10,28 @@ public class Main {
             nbr = scanner.getInt();
 
             if(nbr < 1  || nbr > 3) {
-                view.print("Nombre incorrect. Veuillez choisir 1, 2 ou 3:");
+                view.print("Nombre incorrect. Veuillez choisir 1, 2 ou 3: ");
                 nbr = -1;
             }
         }
 
+        BoardGame boardGame;
         switch(nbr) {
             case 1:
-                TicTacToe ticTacToe = new TicTacToe();
-                ticTacToe.play();
+                boardGame = new TicTacToe();
                 break;
 
             case 2:
-                PuissanceQ puissanceQ = new PuissanceQ();
-                puissanceQ.play();
+                boardGame = new PuissanceQ();
                 break;
 
             case 3:
-                Gomoku gomoku = new Gomoku();
-                gomoku.play();
+                boardGame = new Gomoku();
                 break;
+
+            default:
+                throw new IllegalArgumentException();
         }
+        boardGame.play();
     }
 }
